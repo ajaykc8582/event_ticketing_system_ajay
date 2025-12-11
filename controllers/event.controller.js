@@ -5,6 +5,40 @@ const Hold = require('../models/Hold');
 const Booking = require('../models/Booking');
 
 
+
+
+exports.createEvent = async(req, res) => {
+    try {
+        const {name, date, seats, price} = req.body;
+
+        if(!name || !date || !price || !seats || !Array.isArray(seats)){
+            return res.status(400).json({
+                message: "name, date, price and seats[] are required"
+            });
+        }
+
+        if(typeof name === "undefined" ||  name === ""){
+            return res.status(400).json({
+                message: "name is required"
+            });
+        }
+        
+        const event = await Event.create({
+            name,
+            date,
+            price,
+            seats
+        });
+
+        return res.status(201).json({
+            message: "Event created successfully",
+            event
+        });
+    } catch (error) {
+        return res.status(500).json({ error: error.message});
+    }
+}
+
 exports.getAvailableSeats = async (req, res) => {
     try {
         const event = await Event.findById(req.params.id);

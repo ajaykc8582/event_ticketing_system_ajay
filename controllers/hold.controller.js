@@ -30,7 +30,7 @@ exports.createHold = async (req, res) => {
             expiresAt: new Date(Date.now() + 120000) // 2 minutes TTL
         });
 
-        return res.status(201).json({ hold } );
+        return res.status(201).json(hold);
     } catch (error) {
         return res.status(500).json({ message: 'Internal server error', error: error.message });
     }
