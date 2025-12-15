@@ -51,6 +51,7 @@ exports.getAvailableSeats = async (req, res) => {
 
         const bookings = await Booking.find({ eventId: event._id });
 
+
         const blockedSeats = [
             ...activeHolds.flatMap(h => h.seatCodes),
             ...bookings.flatMap(b => b.seatCodes)
